@@ -8,6 +8,7 @@ public void init() {
         createCartesianLinerModel();
         createBarModel();
         createBarModel2();
+        createLineaTrampa();
         createHorizontalBarModel();
         createStackedBarModel();
         createStackedGroupBarModel();
