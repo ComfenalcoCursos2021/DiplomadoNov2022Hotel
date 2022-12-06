@@ -2,7 +2,7 @@ Readme test
 He registrado esta Linea  <- no jueguen 
 
 public void init() {
-        createPieModel();
+        //createPieModel();
         createPolarAreaModel();
         createLineModel();
         createCartesianLinerModel();
