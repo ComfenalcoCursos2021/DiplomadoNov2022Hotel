@@ -16,5 +16,5 @@ public void init() {
         createBubbleModel();
         createMixedModel();
         createDonutModel();
-        createScatterModel();
+        //createScatterModel();
     }
