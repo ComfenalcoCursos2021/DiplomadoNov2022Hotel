@@ -16,12 +16,28 @@ import com.hotel.dto.TipoHabitacionFront;
 public class HttpHelper {
 	
 	
-	public static List<TipoHabitacionFront> obtenerTiposHabitaciones() throws Exception{
-		String response = HttpHelper.obtenerFromUrl("http://localhost:8080/tipohab/listar");
-		Gson gson = new Gson();
-		Type tipoLista = TypeToken.getParameterized(List.class, TipoHabitacionFront.class).getType();		
-		return gson.fromJson(response, tipoLista);
+	
+	public static <T> T ejecutarGET(String url, Class<T> tipo) throws Exception {
+		String respuesta = obtenerFromUrl(url);
+		return convertirDesdeJson(respuesta,tipo);
 	}
+	public static <T> List<T> ejecutarGETList(String url, Class<T> tipo) throws Exception {
+		String respuesta = obtenerFromUrl(url);
+		return convertirDesdeJsonLista(respuesta,tipo);
+	}
+	
+	
+	public static <T> T convertirDesdeJson(String json, Class<T> tipo) {
+		Gson gson = new Gson();
+		Type tipoGson = TypeToken.getParameterized(tipo).getType();
+		return gson.fromJson(json, tipoGson);		
+	}
+	public static <T> List<T> convertirDesdeJsonLista(String json, Class<T> tipo) {
+		Gson gson = new Gson();
+		Type tipoGsonList = TypeToken.getParameterized(List.class,tipo).getType();
+		return gson.fromJson(json, tipoGsonList);		
+	}
+	
 	
 	public static String obtenerFromUrl(String url) throws Exception {
 		

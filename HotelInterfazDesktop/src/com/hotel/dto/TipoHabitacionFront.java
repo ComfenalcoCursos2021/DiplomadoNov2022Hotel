@@ -16,4 +16,8 @@ public class TipoHabitacionFront {
 		this.descripcion = descripcion;
 	}
 	
+	public String toString() {
+		return this.descripcion;
+	}
+	
 }
