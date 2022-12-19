@@ -7,15 +7,36 @@ import java.io.OutputStream;
 import java.lang.reflect.Type;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.util.Date;
 import java.util.List;
 
 import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.JsonElement;
+import com.google.gson.JsonPrimitive;
+import com.google.gson.JsonSerializationContext;
+import com.google.gson.JsonSerializer;
 import com.google.gson.reflect.TypeToken;
-import com.hotel.dto.TipoHabitacionFront;
 
 public class HttpHelper {
 	
 	
+	public static <T> T ejecutarPOST(String url, Object obj, Class<T> tipo) throws Exception {
+		
+		
+		JsonSerializer<Date> serializador = new JsonSerializer<Date>() {
+			public JsonElement serialize(Date src, Type typeOfSrc, JsonSerializationContext context) {
+				return src == null ? null : new JsonPrimitive(src.getTime());
+			};
+		};
+		
+		
+		Gson gson = new GsonBuilder().registerTypeAdapter(Date.class, serializador).create();
+		String body = gson.toJson(obj,tipo);
+		System.out.println(body);
+		String respuesta = sendPOST(url, body);
+		return convertirDesdeJson(respuesta,tipo);
+	}
 	
 	public static <T> T ejecutarGET(String url, Class<T> tipo) throws Exception {
 		String respuesta = obtenerFromUrl(url);
@@ -78,8 +99,7 @@ public class HttpHelper {
 		con.setRequestMethod("POST");
 		con.setRequestProperty("Content-Type", "application/json");
 		con.setRequestProperty("Accept", "application/json");
-		//con.setRequestProperty("User-Agent", USER_AGENT);
-		con.setDoOutput(true);
+		//con.setRequestProperty("User-Agent", USER_AGENT);		
 		
 		// For POST only - START
 		con.setDoOutput(true);
