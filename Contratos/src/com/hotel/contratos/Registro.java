@@ -1,9 +1,15 @@
 package com.hotel.contratos;
 
+import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 
-public class Registro {
+public class Registro implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 
 	
 	private int id;	

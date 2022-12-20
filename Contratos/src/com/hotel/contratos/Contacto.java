@@ -1,7 +1,13 @@
 package com.hotel.contratos;
 
-public class Contacto {
+import java.io.Serializable;
+
+public class Contacto implements Serializable{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;	
 	private String nombres;	
 	private String contacto;

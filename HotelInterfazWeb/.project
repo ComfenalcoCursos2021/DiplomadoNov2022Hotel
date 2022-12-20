@@ -3,6 +3,8 @@
 	<name>HotelInterfazWeb</name>
 	<comment></comment>
 	<projects>
+		<project>Contratos</project>
+		<project>ConnHelper</project>
 	</projects>
 	<buildSpec>
 		<buildCommand>

@@ -11,16 +11,35 @@
 <h:body>
 
 	<ui:composition template="/templates/template.xhtml">
-		<ui:define name="content">
-			<h1>CLON Test Interfaz Hotel</h1>
-			<hr />
-			<h2>${testBean.mensaje}</h2>
-			<h2>Mensaje para que se vea el cambio</h2>
-			<hr />
-			<h:form>
-				<p:knob min="0" max="100" step="1"></p:knob>
-				<hr />
-				<p:button value="Mi boton" />
+		<ui:define name="content" >
+		<p:panel id= "PanelPrincipal">
+			<h1>SAND BOX - ${testBean.mensaje}</h1>
+		</p:panel>
+			
+			
+			
+			<h:form id="FormularioPrincipal">			
+				<h1>En el formulario - ${testBean.mensaje}</h1>
+				<p:inputText value="#{testBean.mensaje}">
+				</p:inputText>
+				<p:panel header="Seleccione el tipo de habitacion" style="margin-bottom:10px;">
+					<h:panelGrid columns="2" cellpadding="5">
+						<p:outputLabel for="tipoHabitacion" value="Tipo habitacion: " />
+						<p:selectOneMenu id="tipoHabitacion" value="#{testBean.tipoHabitacionSeleccionado}"
+							style="width:150px">
+							<p:ajax listener="#{testBean.onTipoHabitacionChange}" update="PanelPrincipal,FormularioPrincipal"/>						
+							<f:selectItems value="#{testBean.tiposHabitaciones}" 
+							 var="n"
+								itemValue="#{n}" itemLabel="#{n.descripcion}"
+								itemDescription="#{n.descripcion}" 
+							/>
+						</p:selectOneMenu>
+
+					</h:panelGrid>
+
+					<p:divider />
+					
+				</p:panel>
 			</h:form>
 		</ui:define>
 	</ui:composition>

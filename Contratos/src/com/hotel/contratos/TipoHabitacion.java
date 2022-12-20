@@ -1,8 +1,14 @@
 package com.hotel.contratos;
 
+import java.io.Serializable;
 import java.util.Date;
 
-public class TipoHabitacion {
+public class TipoHabitacion  implements Serializable{
+	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	
 	private int id;	
 	private String descripcion;	
