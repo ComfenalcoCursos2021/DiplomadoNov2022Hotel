@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hotel.bl.TipoHabitacionBl;
-import com.hotel.bl.dtos.TipoHabitacionDto;
+import com.hotel.contratos.TipoHabitacion;
 
 @RestController
 @RequestMapping("tipohab")
@@ -18,7 +18,7 @@ public class TipoHabitacionController {
 	private TipoHabitacionBl bl;
 	
 	@GetMapping("listar")
-	public List<TipoHabitacionDto> listar(){
+	public List<TipoHabitacion> listar(){
 		return bl.listar();
 	}
 }

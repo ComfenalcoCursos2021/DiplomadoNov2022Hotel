@@ -1,6 +1,7 @@
 package com.hotel.ventanas;
 
 import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Insets;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -21,20 +22,18 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
 
-import com.hotel.conn.HotelConn;
-import com.hotel.dto.ContactoFront;
-import com.hotel.dto.HabitacionFront;
-import com.hotel.dto.RegistroFront;
-import com.hotel.dto.TipoHabitacionFront;
+import com.hotel.conn.common.HotelConn;
+import com.hotel.contratos.Contacto;
+import com.hotel.contratos.Habitacion;
+import com.hotel.contratos.Registro;
+import com.hotel.contratos.TipoHabitacion;
+import com.hotel.utils.UtilContratos;
 import com.raven.datechooser.DateChooser;
 import com.raven.datechooser.EventDateChooser;
 import com.raven.datechooser.SelectedAction;
 import com.raven.datechooser.SelectedDate;
 
-import test.Main;
-import java.awt.Dimension;
-
-public class Registro extends JDialog {
+public class RegistroDialog extends JDialog {
 
 	private final JPanel contentPanel = new JPanel();
 	private JTextField txtFechaIngreso;
@@ -45,7 +44,7 @@ public class Registro extends JDialog {
 	private JTable tblContactos;
 	private JComboBox cbHabitacionesLibres;
 	private JButton btnAgregarContacto;
-	private List<ContactoFront> contactosRegistro;
+	private List<Contacto> contactosRegistro;
 	private JSpinner spinCantidadPersonas;
 	private DateChooser dateChooserFechaIngreso;
 	private DateChooser dateChooserFechaSalida;
@@ -55,9 +54,9 @@ public class Registro extends JDialog {
 	/**
 	 * Create the dialog.
 	 */
-	public Registro() {
+	public RegistroDialog() {
 		
-		contactosRegistro = new ArrayList<ContactoFront>();
+		contactosRegistro = new ArrayList<Contacto>();
 		dateChooserFechaIngreso = new DateChooser();
 		dateChooserFechaSalida = new DateChooser();
 		dateChooserFechaIngreso.setDateFormat("yyyy/MM/dd");
@@ -169,7 +168,7 @@ public class Registro extends JDialog {
 					return;
 				}
 				
-				ContactoFront nuevo = new ContactoFront();
+				Contacto nuevo = new Contacto();
 				nuevo.setContacto(contacto);
 				nuevo.setNombres(nombre);
 				
@@ -207,13 +206,13 @@ public class Registro extends JDialog {
 				System.out.println(dateChooserFechaIngreso.getObjetoFecha());
 				System.out.println(dateChooserFechaSalida.getObjetoFecha());
 				
-				RegistroFront nuevoRegistro = new RegistroFront();
+				Registro nuevoRegistro = new Registro();
 				nuevoRegistro.setFechaIngreso(dateChooserFechaIngreso.getObjetoFecha());
 				//nuevoRegistro.getCantidadPersonas()
 				nuevoRegistro.setCantidadPersonas((int)spinCantidadPersonas.getValue());
 				nuevoRegistro.setContactos(contactosRegistro);
 				
-				HabitacionFront hab = (HabitacionFront)cbHabitacionesLibres.getSelectedItem();
+				Habitacion hab = (Habitacion)cbHabitacionesLibres.getSelectedItem();
 				nuevoRegistro.setHabitacion(hab);
 				try {
 					HotelConn.guardarRegistro(nuevoRegistro);
@@ -281,7 +280,7 @@ public class Registro extends JDialog {
 				
 				if(txtIdRegistro.getText().trim().length() > 0) {
 					try {
-						RegistroFront registro = HotelConn.obtenerRegistro(Integer.valueOf(txtIdRegistro.getText()));
+						Registro registro = HotelConn.obtenerRegistro(Integer.valueOf(txtIdRegistro.getText()));
 						contactosRegistro = registro.getContactos();
 						
 						cbTipoHabitacion.setSelectedItem(registro.getHabitacion().getTipoHabitacion());
@@ -290,6 +289,7 @@ public class Registro extends JDialog {
 						cbHabitacionesLibres.setModel(nuevo);
 						dateChooserFechaIngreso.setSelectedDate(registro.getFechaIngreso());
 						
+						spinCantidadPersonas.setValue(registro.getCantidadPersonas());
 						
 						
 						refrescarContactos();
@@ -336,7 +336,7 @@ public class Registro extends JDialog {
 		}
 	}
 	public void inicializarComtroles() throws Exception {
-		List<TipoHabitacionFront> tiposHabitaciones = HotelConn.obtenerTiposHabitaciones();
+		List<TipoHabitacion> tiposHabitaciones = HotelConn.obtenerTiposHabitaciones();
 		DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
 		modeloCombo.addAll(tiposHabitaciones);
 		cbTipoHabitacion.setModel(modeloCombo);
@@ -346,9 +346,9 @@ public class Registro extends JDialog {
 	}
 	private void recargarHabitacionesLibres() throws Exception {
 		
-		TipoHabitacionFront tipoSeleccionado = (TipoHabitacionFront) cbTipoHabitacion.getSelectedItem();
+		TipoHabitacion tipoSeleccionado = (TipoHabitacion) cbTipoHabitacion.getSelectedItem();
 		
-		List<HabitacionFront> libres = HotelConn.obtenerHabitacionesLibres(tipoSeleccionado.getId());
+		List<Habitacion> libres = HotelConn.obtenerHabitacionesLibres(tipoSeleccionado.getId());
 		DefaultComboBoxModel modeloComboLibres = new DefaultComboBoxModel();
 		modeloComboLibres.addAll(libres);
 		cbHabitacionesLibres.setModel(modeloComboLibres);
@@ -360,8 +360,8 @@ public class Registro extends JDialog {
 		DefaultTableModel modelo = new DefaultTableModel();
 		modelo.addColumn("Nombres");
 		modelo.addColumn("Contacto");
-		for (ContactoFront contactoFront : contactosRegistro) {
-			modelo.addRow(contactoFront.getRowTableModel());
+		for (Contacto contacto : contactosRegistro) {
+			modelo.addRow(UtilContratos.getContactoRowTableModel(contacto));
 		}
 		tblContactos.setModel(modelo);
 	}

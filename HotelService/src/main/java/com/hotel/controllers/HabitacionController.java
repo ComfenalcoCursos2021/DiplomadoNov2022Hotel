@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.hotel.bl.HabitacionBl;
-import com.hotel.bl.dtos.HabitacionDto;
+import com.hotel.contratos.Habitacion;
 
 @RestController
 @RequestMapping(value="habitacion")
@@ -20,7 +20,7 @@ public class HabitacionController {
 	
 	
 	@GetMapping("libres/{tipohabitacion}")
-	public List<HabitacionDto> consulta(@PathVariable String tipohabitacion) {
+	public List<Habitacion> consulta(@PathVariable String tipohabitacion) {
 		return bl.getLibres(Integer.parseInt(tipohabitacion));
 	}	
 	

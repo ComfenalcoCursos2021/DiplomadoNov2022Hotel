@@ -13,15 +13,16 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
-import javax.swing.border.EmptyBorder;
-
-import com.hotel.conn.HotelConn;
-import com.hotel.dto.HabitacionFront;
-import com.hotel.dto.TipoHabitacionFront;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.JTextField;
+import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableModel;
+
+import com.hotel.conn.common.HotelConn;
+import com.hotel.contratos.Habitacion;
+import com.hotel.contratos.TipoHabitacion;
+import com.hotel.utils.UtilContratos;
 
 public class VentanaTest extends JFrame {
 
@@ -71,9 +72,9 @@ public class VentanaTest extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String body = "{\r\n" + "  \"descripcion\": \"la desc\",\r\n" + "  \"id\": 3\r\n" + "}";
 				try {
-					List<TipoHabitacionFront> tiposHabitaciones = HotelConn.obtenerTiposHabitaciones();
+					List<TipoHabitacion> tiposHabitaciones = HotelConn.obtenerTiposHabitaciones();
 					DefaultComboBoxModel modeloCombo = new DefaultComboBoxModel();
-					for (TipoHabitacionFront element : tiposHabitaciones) {
+					for (TipoHabitacion element : tiposHabitaciones) {
 						System.out.println(element.getId() + " - " + element.getDescripcion());
 						txtTexto.setText(element.getId() + " - " + element.getDescripcion());
 						System.out.println("ESTE ES EL ELEMENTO -> " + element);
@@ -102,7 +103,7 @@ public class VentanaTest extends JFrame {
 		cbTipoHabitaciones = new JComboBox();
 		cbTipoHabitaciones.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TipoHabitacionFront tipoSeleccionado = (TipoHabitacionFront) ((JComboBox) e.getSource())
+				TipoHabitacion tipoSeleccionado = (TipoHabitacion) ((JComboBox) e.getSource())
 						.getSelectedItem();
 				System.out.println("INTEREACTUO CON EL ELEMENTO -> " + tipoSeleccionado);
 
@@ -126,7 +127,7 @@ public class VentanaTest extends JFrame {
 		JButton btnPruebaSeleccion = new JButton("Prueba Seleccion");
 		btnPruebaSeleccion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TipoHabitacionFront tipoSeleccionado = (TipoHabitacionFront) cbTipoHabitaciones.getSelectedItem();
+				TipoHabitacion tipoSeleccionado = (TipoHabitacion) cbTipoHabitaciones.getSelectedItem();
 				lblNewLabel.setText(
 						"El seleccionado es -> " + tipoSeleccionado.getId() + " " + tipoSeleccionado.getDescripcion());
 				try {
@@ -179,8 +180,8 @@ public class VentanaTest extends JFrame {
 	}
 
 	private void recargarComboHabitaciones() throws Exception {
-		TipoHabitacionFront tipoHab = (TipoHabitacionFront) cbTipoHabitaciones.getSelectedItem();
-		List<HabitacionFront> libres = HotelConn.obtenerHabitacionesLibres(tipoHab.getId());
+		TipoHabitacion tipoHab = (TipoHabitacion) cbTipoHabitaciones.getSelectedItem();
+		List<Habitacion> libres = HotelConn.obtenerHabitacionesLibres(tipoHab.getId());
 
 		DefaultTableModel modeloTabla = new DefaultTableModel();
 
@@ -188,8 +189,8 @@ public class VentanaTest extends JFrame {
 		modeloTabla.addColumn("Numero");
 		modeloTabla.addColumn("Descripcion");
 
-		for (HabitacionFront hab : libres) {
-			modeloTabla.addRow(hab.getRowTableModel());
+		for (Habitacion hab : libres) {
+			modeloTabla.addRow(UtilContratos.getHabitacionRowTableModel(hab));
 		}
 		tblHabitacionesLibres.setModel(modeloTabla);
 

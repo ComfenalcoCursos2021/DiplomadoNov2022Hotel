@@ -1,8 +1,13 @@
-package com.hotel.dto;
+package com.hotel.contratos;
 
-public class TipoHabitacionFront {
-	private int id;
-	private String descripcion;
+import java.util.Date;
+
+public class TipoHabitacion {
+	
+	private int id;	
+	private String descripcion;	
+	
+	
 	public int getId() {
 		return id;
 	}
@@ -15,7 +20,6 @@ public class TipoHabitacionFront {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	
 	public String toString() {
 		return this.descripcion;
 	}

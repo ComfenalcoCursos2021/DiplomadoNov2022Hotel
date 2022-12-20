@@ -12,7 +12,7 @@ import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class Bienvenida extends JFrame {
+public class BienvenidaJFrame extends JFrame {
 
 	private JPanel contentPane;
 
@@ -23,7 +23,7 @@ public class Bienvenida extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					Bienvenida frame = new Bienvenida();
+					BienvenidaJFrame frame = new BienvenidaJFrame();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -35,7 +35,7 @@ public class Bienvenida extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public Bienvenida() {
+	public BienvenidaJFrame() {
 		try {
             for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
             	System.out.println(info.getName());
@@ -64,7 +64,7 @@ public class Bienvenida extends JFrame {
 		JButton btnRegistro = new JButton("Ir a registro");
 		btnRegistro.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				new Registro().setVisible(true);;
+				new RegistroDialog().setVisible(true);;
 			}
 		});
 		btnRegistro.setBounds(35, 62, 138, 145);

@@ -34,7 +34,5 @@
 		</attributes>
 	</classpathentry>
 	<classpathentry combineaccessrules="false" kind="src" path="/Contratos"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/DJRavenDateChooser"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/ConnHelper"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>

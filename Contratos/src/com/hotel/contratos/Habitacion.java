@@ -1,11 +1,11 @@
-package com.hotel.bl.dtos;
+package com.hotel.contratos;
 
-public class HabitacionDto {
+public class Habitacion {
 	
 	private int id;	
 	private String numero;	
 	private String descripcion;	
-	private TipoHabitacionDto tipoHabitacion;
+	private TipoHabitacion tipoHabitacion;
 	public int getId() {
 		return id;
 	}
@@ -24,11 +24,14 @@ public class HabitacionDto {
 	public void setDescripcion(String descripcion) {
 		this.descripcion = descripcion;
 	}
-	public TipoHabitacionDto getTipoHabitacion() {
+	public TipoHabitacion getTipoHabitacion() {
 		return tipoHabitacion;
 	}
-	public void setTipoHabitacion(TipoHabitacionDto tipoHabitacion) {
+	public void setTipoHabitacion(TipoHabitacion tipoHabitacion) {
 		this.tipoHabitacion = tipoHabitacion;
+	}
+	public String toString() {
+		return this.numero + " - " + this.descripcion; 
 	}
 	
 	

@@ -1,6 +1,6 @@
-package com.hotel.bl.dtos;
+package com.hotel.contratos;
 
-public class ContactoDto {
+public class Contacto {
 	
 	private int id;	
 	private String nombres;	

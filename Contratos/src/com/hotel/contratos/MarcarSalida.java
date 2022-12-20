@@ -1,6 +1,6 @@
-package com.hotel.bl.dtos;
+package com.hotel.contratos;
 
-public class MarcarSalidaDto {
+public class MarcarSalida {
 	private int id;
 
 	public int getId() {

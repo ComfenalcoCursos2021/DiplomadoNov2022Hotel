@@ -7,9 +7,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.hotel.bl.dtos.ContactoDto;
-import com.hotel.bl.dtos.HabitacionDto;
-import com.hotel.bl.dtos.RegistroDto;
+import com.hotel.contratos.Contacto;
+import com.hotel.contratos.Habitacion;
+import com.hotel.contratos.Registro;
 import com.hotel.dal.conn.ContactoConn;
 import com.hotel.dal.conn.HabitacionConn;
 import com.hotel.dal.conn.RegistroConn;
@@ -32,7 +32,7 @@ public class RegistroBl {
 	@Autowired
 	private ContactoConn contactoConn;
 	
-	public RegistroDto marcarSalida(int id) {
+	public Registro marcarSalida(int id) {
 		
 		RegistroDao dao = registroConn.findById(id).get();
 		dao.setFechaSalida(new Date());
@@ -42,19 +42,19 @@ public class RegistroBl {
 		return getRegistroDtoById(id);
 	}
 	
-	public RegistroDto getRegistroById(int id) {		
+	public Registro getRegistroById(int id) {		
 		return getRegistroDtoById(id);
 		
 	}
 
-	private RegistroDto getRegistroDtoById(int id) {
+	private Registro getRegistroDtoById(int id) {
 		RegistroDao dao = registroConn.findById(id).get();
 		HabitacionDao hDao = habitacionConn.findById(dao.getIdHabitacion()).get();
 		TipoHabitacionDao thDao = tipoHabitacionConn.findById(hDao.getIdTipoHabitacion()).get();
 		List<ContactoDao> lContactoDao = contactoConn.findByIdRegistro(dao.getId());
 				
-		RegistroDto registroDto = UtilsMapper.mapper(dao);
-		HabitacionDto habitacionDto = UtilsMapper.mapper(hDao);
+		Registro registroDto = UtilsMapper.mapper(dao);
+		Habitacion habitacionDto = UtilsMapper.mapper(hDao);
 		habitacionDto.setTipoHabitacion(UtilsMapper.mapper(thDao));
 		
 		registroDto.setHabitacion(habitacionDto);
@@ -63,14 +63,14 @@ public class RegistroBl {
 		return registroDto;
 	}
 	
-	public RegistroDto guardar(RegistroDto dto) {
+	public Registro guardar(Registro dto) {
 		RegistroDao dao = UtilsMapper.mapper(dto);
 		dao.setFechaIngreso(new Date());
 		dao.setFechaSalida(null);
 		dao = registroConn.saveAndFlush(dao);
 		
 		List<ContactoDao> daosSave = new ArrayList<ContactoDao>();
-		for (ContactoDto contactoDto : dto.getContactos()) {
+		for (Contacto contactoDto : dto.getContactos()) {
 			ContactoDao contactoDao = UtilsMapper.mapper(contactoDto);
 			contactoDao.setIdRegistro(dao.getId());
 			//contactoConn.saveAndFlush(contactoDao);

@@ -1,15 +1,17 @@
-package com.hotel.dto;
+package com.hotel.contratos;
 
 import java.util.Date;
 import java.util.List;
 
-public class RegistroFront {
+public class Registro {
+
+	
 	private int id;	
 	private Date fechaIngreso;	
 	private Date fechaSalida;	
 	private int cantidadPersonas;	
-	private HabitacionFront habitacion;
-	private List<ContactoFront> contactos;
+	private Habitacion habitacion;
+	private List<Contacto> contactos;
 	public int getId() {
 		return id;
 	}
@@ -34,16 +36,17 @@ public class RegistroFront {
 	public void setCantidadPersonas(int cantidadPersonas) {
 		this.cantidadPersonas = cantidadPersonas;
 	}
-	public HabitacionFront getHabitacion() {
+	public Habitacion getHabitacion() {
 		return habitacion;
 	}
-	public void setHabitacion(HabitacionFront habitacion) {
+	public void setHabitacion(Habitacion habitacion) {
 		this.habitacion = habitacion;
 	}
-	public List<ContactoFront> getContactos() {
+	public List<Contacto> getContactos() {
 		return contactos;
 	}
-	public void setContactos(List<ContactoFront> contactos) {
+	public void setContactos(List<Contacto> contactos) {
 		this.contactos = contactos;
 	}
+	
 }
